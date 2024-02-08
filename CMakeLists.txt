@@ -11,6 +11,7 @@ option(PSTR_BUILD_STATIC "Build static library" ON)
 option(PSTR_BUILD_OBJECT "Build object library" ON)
 option(PSTR_BUILD_TESTS "Build test executables" ON)
 
+include(CheckIncludeFile)
 include("cmake/libpolystr-config-version.cmake")
 
 set(sources 
@@ -29,6 +30,40 @@ if (NOT CMAKE_BUILD_TYPE)
     message(STATUS "No build type selected, default to: Release")
     set(CMAKE_BUILD_TYPE "Release")
   endif()
+endif()
+
+# -------------------
+# Check system files
+# -------------------
+
+CHECK_INCLUDE_FILE("stdint.h" HAVE_STDINT_H)
+if(HAVE_STDINT_H)
+	list(APPEND defines HAVE_STDINT_H)
+endif()
+
+CHECK_INCLUDE_FILE("stdio.h" HAVE_STDIO_H)
+if(HAVE_STDIO_H)
+	list(APPEND defines HAVE_STDIO_H)
+endif()
+
+CHECK_INCLUDE_FILE("stddef.h" HAVE_STDDEF_H)
+if(HAVE_STDDEF_H)
+	list(APPEND defines HAVE_STDDEF_H)
+endif()
+
+CHECK_INCLUDE_FILE("stdlib.h" HAVE_STDLIB_H)
+if(HAVE_STDLIB_H)
+	list(APPEND defines HAVE_STDLIB_H)
+endif()
+
+CHECK_INCLUDE_FILE("string.h" HAVE_STRING_H)
+if(HAVE_STRING_H)
+	list(APPEND defines HAVE_STRING_H)
+endif()
+
+CHECK_INCLUDE_FILE("errno.h" HAVE_ERRNO_H)
+if(HAVE_ERRNO_H)
+	list(APPEND defines HAVE_ERRNO_H)
 endif()
 
 # --
