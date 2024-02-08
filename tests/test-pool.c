@@ -218,6 +218,8 @@ int main() {
         }
         string_memory_pool_free(ppool);
       }
+
+      remove("swap1.tmp");
     }
   }
 
