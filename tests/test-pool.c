@@ -76,14 +76,14 @@ int main() {
 
   char *str = "Hello";
   uint32_t offset = 0;
-  if (string_memory_pool_push(ppool, &str, 0, &offset) != -1) {
+  if (string_memory_pool_push(ppool, str, &str, 0, &offset) != -1) {
     fprintf(stderr, "null terminated string should not fit.\n");
     return -1;
   }
 
   char *str_ref = str;
   str = "Hell";
-  if (string_memory_pool_push(ppool, &str, 0, &offset) != 0) {
+  if (string_memory_pool_push(ppool, str, &str, 0, &offset) != 0) {
     fprintf(stderr, "null terminated string should fit.\n");
     return -1;
   } else {
@@ -128,14 +128,14 @@ int main() {
       uint32_t offset = 0;
       char *str = "Hello";
       string_memory_pool_new(ppool, 100);
-      string_memory_pool_push(ppool, &str, 0, &offset);
+      string_memory_pool_push(ppool, str, &str, 0, &offset);
 
       if (pool.capacity != 93) {
         fprintf(stderr, "capacity should be 93 if Hello is pushed first.\n");
         return -1;
       }
       char *str2 = "Hello2";
-      string_memory_pool_push(ppool, &str2, 0, &offset);
+      string_memory_pool_push(ppool, str2, &str2, 0, &offset);
       if (offset != 7) {
         fprintf(stderr, "invalid offset value.\n");
         return -1;
@@ -171,7 +171,7 @@ int main() {
 
       char *str1 = "Test";
       uint32_t offset = 0;
-      string_memory_pool_push(ppool, &str1, 0, &offset);
+      string_memory_pool_push(ppool, str1, &str1, 0, &offset);
 
       if (string_memory_pool_swap_to_file(ppool, "/no_perm_file") >= 0) {
         fprintf(stderr, "file errors not handled.\n");

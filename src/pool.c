@@ -42,12 +42,13 @@ int8_t string_memory_pool_free(string_memory_pool_t *pool) {
   return (0);
 }
 
-int8_t string_memory_pool_push(string_memory_pool_t *pool, char **string,
-                               size_t string_len, uint32_t *offset) {
+int8_t string_memory_pool_push(string_memory_pool_t *pool, const char *str,
+                               char **str_out, size_t string_len,
+                               uint32_t *offset) {
   *offset = 0;
   // if string_len is 0 find it ourselves.
   if (string_len == 0) {
-    string_len = strlen(*string);
+    string_len = strlen(str);
   }
 
   // can't fit string into pool
@@ -56,7 +57,7 @@ int8_t string_memory_pool_push(string_memory_pool_t *pool, char **string,
   }
 
   // no need to null terminate since poll is already filled with null.
-  strncpy(pool->last, *string, string_len);
+  strncpy(pool->last, str, string_len);
   char *string_ptr = pool->last;
 
   pool->last = pool->last + string_len + 1;
@@ -64,7 +65,7 @@ int8_t string_memory_pool_push(string_memory_pool_t *pool, char **string,
   pool->count += 1;
 
   // set string to the new pointer
-  *string = string_ptr;
+  *str_out = string_ptr;
   *offset = string_ptr - pool->data;
 
   return (0);

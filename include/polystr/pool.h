@@ -12,8 +12,8 @@ typedef struct string_memory_pool_s {
 
 int8_t string_memory_pool_new(string_memory_pool_t *, uint32_t);
 int8_t string_memory_pool_free(string_memory_pool_t *);
-int8_t string_memory_pool_push(string_memory_pool_t *, char **, size_t,
-                               uint32_t *);
+int8_t string_memory_pool_push(string_memory_pool_t *, const char *, char **,
+                               size_t, uint32_t *);
 int8_t string_memory_pool_get(string_memory_pool_t *, uint32_t, char **);
 int8_t string_memory_pool_swap_to_file(string_memory_pool_t *pool,
                                        const char *file_name);
